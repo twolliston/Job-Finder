@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Page Title-->
+    <title>Job Hunter</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans|Ubuntu|Ubuntu+Condensed" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+
+</head>
+
+<body style="background-color: #F1F6FA">
+    <!--Start of the main container-->
+    <div class="container">
+        <!--Jumbotron-->
+        <div class="jumbotron mb-0">
+            <!--Div for the Login-->
+            <div id="login_div" class="main-div">
+                <!--Email input-->
+                <div class="form-group">
+                    <input type="email" class="form-control" id="userEmail" placeholder="E-mail" style="font-family: 'Ubuntu', sans-serif;
+                    ">
+                </div>
+                <!--Password-->
+                <div class="form-group">
+                    <input type="password" class="form-control" id="userPassword" placeholder="Password" style="font-family: 'Ubuntu', sans-serif;
+                    ">
+                </div>
+                <div class="form-group">
+                    <!--Login Button-->
+                    <button onclick="login()" class="btn btn-primary" style="font-family: 'Ubuntu', sans-serif;
+                    ">Login</button>
+                    <!--Signup button-->
+                    <button onclick="signup()" class="btn btn-primary" style="font-family: 'Ubuntu', sans-serif;
+                    ">Sign-Up</button>
+                </div>
+            </div>
+            <!--Div for when logged In-->
+            <div id="user_div" class="loggedin-div">
+                <div class="form-group">
+                    <!-- Div to put the welcome + user email-->
+                    <h5 id="user_para" style="font-family: 'Nunito Sans', sans-serif; font-weight: bold; 
+                    ">You're not currently logged in.</h5>
+                </div>
+                <div class="form-group">
+                    <!--Log Out Button-->
+                    <button onclick="logout()" class="btn btn-primary" style="font-family: 'Ubuntu', sans-serif;
+                    ">Log Out</button>
+                    <!--Saved Jobs Button-->
+                    <button id="callList" type="button" class="btn btn-primary" style="font-family: 'Ubuntu', sans-serif;
+                    " data-toggle="modal" data-target="#SavedJobsList">
+                        Saved Jobs
+                    </button>
+                </div>
+            </div>
+            <!--Job Hunter Logo-->
+            <h1 class="display-3" style="font-weight: bold">
+                <i class="fas fa-search"></i> Job Hunter</h1>
+        </div>
+
+
+        <!-- display Success message -->
+        <div class="alert alert-primary" id="success" role="alert">
+            Job Saved Successfully!
+        </div>
+
+
+
+        <!--Div for job searching-->
+        <div class="container my-1">
+            <form name="myForm">
+                <div class="form-row">
+                    <div class="form-group; col-lg-5">
+                        <!-- Where?? -->
+                        <input type="text" name="where" class="form-control" placeholder="Where are you looking? (city, state, or zip)" style="font-family: 'Ubuntu', sans-serif;
+                        " id="location-input">
+                    </div>
+                    <div class="form-group; col-lg-5">
+                        <!-- Type of Job -->
+                        <input type="text" name="type" class="form-control" placeholder="What kind of job are you looking for?" style="font-family: 'Ubuntu', sans-serif;
+                        " id="keyword-input">
+                    </div>
+                    <div class="col-lg-2" style="text-align: center; font-family: 'Ubuntu', sans-serif;">
+                        <!--Find Jobs Button-->
+                        <button type="submit" class="btn btn-primary" id="submit-search">Find Jobs!</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-lg-5">
+                        <div class="alert alert-primary" id="where" role="alert">
+                            Required!
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="alert alert-primary" id="type" role="alert">
+                            Required!
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--Div for the results-->
+            <div class="content-wrapper" style="display:none">
+                <div class="card my-1">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!--Empty div for the google map-->
+                            <div id="map" style="height:520px">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- Table for the results from career one stop-->
+                            <div class="table-responsive" style="height: 520px">
+                                <table class="table table-hover" id="resultsTable" style="font-size:14px; font-family: 'Ubuntu', sans-serif;
+                                ">
+                                    <thead>
+                                        <tr>
+                                            <th>Job Title</th>
+                                            <th>Company</th>
+                                            <th>Location</th>
+                                            <th>Posted</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="SavedJobsList" style="height: 700px" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <!-- display Success message -->
+                    <div class="alert alert-primary" id="delete-success" role="alert">
+                        Job Deleted Successfully!
+                    </div>
+                    <!-- modal Header-->
+                    <div class="modal-header" style="font-family: 'Ubuntu', sans-serif; background-color: #007BFF;
+                    color: white">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Saved Jobs</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <!--Modal Body-->
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="savedJobs" style="font-size:10px; font-family: 'Ubuntu', sans-serif;">
+                                <thead>
+                                    <tr>
+                                        <th>Job Title</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>Posted</th>
+                                        <th></th>
+                                        <th></th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Modal Footer-->
+                        <div class="modal-footer">
+                            <!--Close Button-->
+                            <button type="button" class="btn btn-primary" style="font-family: 'Ubuntu', sans-serif;
+                            " data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+</div>
+
+<!--JavaScript-->
+<script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAERjOZ74OofOKreqqakgNH-RmVu3Yp8k&libraries=places"></script>
+
+<script src="assets/js/muse.js"></script>
+<script src="assets/js/index.js"></script>
+
+</body>
+
+</html>
